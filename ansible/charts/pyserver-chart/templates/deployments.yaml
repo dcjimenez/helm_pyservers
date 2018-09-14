@@ -22,6 +22,9 @@ spec:
       containers:
       - name: {{ $service.name }}
         image: {{ $service.image }}
+        resources:
+          requests:
+            cpu: 200m
         imagePullPolicy: Always
         ports:
           - containerPort: {{ $service.port }}
