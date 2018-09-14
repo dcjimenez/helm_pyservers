@@ -21,22 +21,6 @@ items:
       apiVersion: apps/v1
       kind: Deployment
       name: consumer
-#  status:
-#    conditions:
-#    - lastTransitionTime: 2018-09-14T08:54:23Z
-#      message: the HPA controller was able to get the target's current scale
-#      reason: SucceededGetScale
-#      status: "True"
-#      type: AbleToScale
-#    - lastTransitionTime: 2018-09-14T08:54:23Z
-#      message: 'the HPA was unable to compute the replica count: unable to get metrics
-#        for resource cpu: no metrics returned from resource metrics API'
-#      reason: FailedGetResourceMetric
-#      status: "False"
-#      type: ScalingActive
-#    currentMetrics: null
-#    currentReplicas: 1
-#    desiredReplicas: 0
 kind: List
 metadata:
   resourceVersion: ""
