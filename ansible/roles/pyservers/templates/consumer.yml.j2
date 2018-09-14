@@ -1,0 +1,22 @@
+environment: pre
+
+secretpro: acr-secret-falso
+secretpre: acr-secret
+
+ingress: 
+  enabled: yes
+
+service:
+  name: consumer
+  replicas: 1
+  enabled: yes
+  autoscaler:
+    enabled: yes
+    min: 1
+    max: 10
+    targetCpuUtilization: 50
+  port: 8000
+  image: kubepre.azurecr.io/consumer:1.0
+  vars:
+    - name: PYSERVICE
+      value: py2server

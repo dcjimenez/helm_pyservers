@@ -1,0 +1,20 @@
+{{ $service := .Values.service }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $service.name }}-ingress
+  annotations:    
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  namespace: default
+spec:
+  rules:
+    - http:
+        paths:        
+          - hosts:
+              - {{ $service.name }}.local
+            path: /{{ $service.name }}
+            backend:
+              serviceName: {{ $service.name }}
+              servicePort: {{ $service.port }}        

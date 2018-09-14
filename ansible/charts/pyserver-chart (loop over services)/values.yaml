@@ -1,0 +1,25 @@
+environment: pre
+
+secretpro: acr-secret-falso
+secretpre: acr-secret
+
+ingress: 
+  enabled: yes
+
+service:
+  py2:
+    name: py2server
+    enabled: yes
+    port: 8000
+    image: kubepre.azurecr.io/pyserver:2
+    vars:
+      - name: TEST1
+        value: test1
+      - name: TEST2
+        value: test2
+      - name: TEST3
+        value: test3
+   
+
+
+  

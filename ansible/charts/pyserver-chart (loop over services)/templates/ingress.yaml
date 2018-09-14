@@ -1,0 +1,26 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pyserver-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx  
+  namespace: default
+spec:
+  rules:
+    - http:
+        paths:
+        {{ range $index, $service := .Values.services }}
+          - hosts:
+              - {{ $service.name }}.local
+            path: /{{ $service.name }}
+            backend:
+              serviceName: {{ $service.name }}
+              servicePort: {{ $service.port }}
+          - hosts:
+              - {{ $service.name }}.local
+            path: /{{ $service.name }}
+            backend:
+              serviceName: {{ $service.name }}
+              servicePort: {{ $service.port }}
+        {{- end -}}

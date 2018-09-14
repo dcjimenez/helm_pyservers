@@ -1,0 +1,19 @@
+---
+- name: Create values file for helm chart from template
+  template:
+   src: "{{ values_file_path }}"
+   dest: "charts/pyserver-chart/values.yaml"
+   mode: 0600
+
+- name: Include variables in current values.yaml
+  include_vars:
+    file: "charts/pyserver-chart/values.yaml"   
+    name: char_vars
+
+- name: Delete pyserver
+  shell: "helm del --purge {{ char_vars.service.name }}"
+  ignore_errors: yes
+
+- name: Install pyserver
+  shell: "helm install --name {{ char_vars.service.name }} charts/pyserver-chart"
+  when: delete is not defined or "true" not in delete

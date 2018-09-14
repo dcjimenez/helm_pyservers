@@ -1,0 +1,11 @@
+rbac:
+  create: false
+  createRole: false
+  createClusterRole: false
+controller:
+  service:
+    loadBalancerIP: "10.2.0.150"
+    enableHttp: true
+    enableHttps: false
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"

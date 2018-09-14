@@ -1,0 +1,6 @@
+# List of services that are desired to deploy instead of all.
+
+services:
+  - py2server
+  - py3server
+  - py4server

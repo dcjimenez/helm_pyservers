@@ -1,0 +1,40 @@
+{{ $environment := .Values.environment }}
+{{ $secretpre := .Values.secretpre }}
+{{ $secretpro := .Values.secretpro }}
+{{ $service := .Values.service }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $service.name }}
+  labels:
+    app: {{ $service.name }}
+spec:
+  replicas: {{ $service.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $service.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $service.name }}
+    spec:
+      containers:
+      - name: {{ $service.name }}
+        image: {{ $service.image }}
+        imagePullPolicy: Always
+        ports:
+          - containerPort: {{ $service.port }}
+        env:
+        {{- range $var := $service.vars }}
+          - name: "{{ $var.name }}"
+            value: "{{ $var.value }}"
+        {{- end }}
+      imagePullSecrets:
+      - name:
+          {{- if eq $environment "pre" }}
+          {{ $secretpre }}
+          {{- end }}
+          {{- if eq $environment "pro" }}
+          {{ $secretpro }}
+          {{- end }}

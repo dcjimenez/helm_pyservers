@@ -1,0 +1,4 @@
+.project
+.pydevproject
+ansible/*.retry
+ansible/charts/pyserver-chart/values.yaml

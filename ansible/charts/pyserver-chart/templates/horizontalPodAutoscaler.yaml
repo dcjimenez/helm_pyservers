@@ -1,0 +1,43 @@
+{{ $service := .Values.service }}
+{{- if $service.autoscaler.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $service.name }}
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $service.name }}
+  minReplicas: {{ $service.autoscaler.min }}
+  maxReplicas: {{ $service.autoscaler.max }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ $service.autoscaler.targetCpuUtilization }}
+#  - type: Pods
+#    pods:
+#      metricName: packets-per-second
+#      targetAverageValue: 1k
+#  - type: Object
+#    object:
+#      metricName: requests-per-second
+#      target:
+#        apiVersion: extensions/v1beta1
+#        kind: Ingress
+#        name: main-route
+#      targetValue: 10k
+status:
+  observedGeneration: 1
+#  lastScaleTime: <some-time>
+#  currentReplicas: 1
+#  desiredReplicas: 1
+#  currentMetrics:
+#  - type: Resource
+#    resource:
+#      name: cpu
+#      currentAverageUtilization: 0
+#      currentAverageValue: 0
+{{- end -}}

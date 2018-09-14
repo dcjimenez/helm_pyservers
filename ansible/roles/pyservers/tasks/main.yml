@@ -1,0 +1,18 @@
+---
+- name: Find value files
+  find:
+    path: 'roles/pyservers/templates'
+    recurse: yes
+    file_type: file
+  register: values_files
+
+- name: Print content of files in "roles/pyservers/templates/"
+  debug:
+    msg: "{{ item.src }}"
+  with_filetree: roles/pyservers/templates/
+  when: item.state == 'file'
+
+- name: Iterate over values files to install its charts
+  include: install.yml values_file_path='{{ item.path }}'
+  with_items:
+    - '{{ values_files.files }}'
