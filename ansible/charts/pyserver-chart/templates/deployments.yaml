@@ -29,6 +29,8 @@ spec:
         ports:
           - containerPort: {{ $service.port }}
         env:
+          - name: RELEASE_NAME
+            value: {{ .Release.Name }}
         {{- range $var := $service.vars }}
           - name: "{{ $var.name }}"
             value: "{{ $var.value }}"
